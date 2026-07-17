@@ -1,4 +1,4 @@
-package br.inter.dti.gmoraes.remittance_service;
+package br.inter.dti.gmoraes.remittance;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

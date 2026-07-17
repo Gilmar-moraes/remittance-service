@@ -1,7 +1,7 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The original package name 'br.inter.dti.gmoraes.remittance-service' is invalid and this project uses 'br.inter.dti.gmoraes.remittance_service' instead.
+* The original package name 'br.inter.dti.gmoraes.remittance-service' is invalid and this project uses 'br.inter.dti.gmoraes.remittance' instead.
 
 # Getting Started
 
