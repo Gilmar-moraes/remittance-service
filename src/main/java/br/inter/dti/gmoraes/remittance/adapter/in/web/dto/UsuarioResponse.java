@@ -1,4 +1,4 @@
-package br.inter.dti.gmoraes.remittance.adapter.in.dto;
+package br.inter.dti.gmoraes.remittance.adapter.in.web.dto;
 
 public record UsuarioResponse(
 

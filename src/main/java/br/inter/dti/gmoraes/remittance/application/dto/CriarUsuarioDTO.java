@@ -1,13 +1,13 @@
-package br.inter.dti.gmoraes.remittance.adapter.in.dto;
+package br.inter.dti.gmoraes.remittance.application.dto;
 
 import br.inter.dti.gmoraes.remittance.domain.enums.TipoUsuario;
 
-public record CriarUsuarioRequest(
+public record CriarUsuarioDTO(
         String nomeCompleto,
         String email,
         String senha,
-        TipoUsuario tipoUsuario,
         String cpf,
-        String cnpj
+        String cnpj,
+        TipoUsuario tipoUsuario
 ) {
 }

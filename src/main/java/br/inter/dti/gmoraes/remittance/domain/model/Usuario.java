@@ -1,6 +1,6 @@
 package br.inter.dti.gmoraes.remittance.domain.model;
 
-import br.inter.dti.gmoraes.remittance.application.dto.CriarUsuarioCommand;
+import br.inter.dti.gmoraes.remittance.application.dto.CriarUsuarioDTO;
 import br.inter.dti.gmoraes.remittance.domain.enums.TipoUsuario;
 import jakarta.persistence.*;
 
@@ -125,7 +125,7 @@ public class Usuario {
         this.carteira = carteira;
     }
 
-    public static Usuario criar(CriarUsuarioCommand command) {
+    public static Usuario criar(CriarUsuarioDTO command) {
         return new Usuario(
                 command.nomeCompleto(),
                 command.email(),

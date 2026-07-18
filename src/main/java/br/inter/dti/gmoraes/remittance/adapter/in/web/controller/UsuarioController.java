@@ -1,10 +1,11 @@
-package br.inter.dti.gmoraes.remittance.adapter.in;
+package br.inter.dti.gmoraes.remittance.adapter.in.web.controller;
 
-import br.inter.dti.gmoraes.remittance.adapter.in.dto.CriarUsuarioRequest;
-import br.inter.dti.gmoraes.remittance.adapter.in.dto.UsuarioResponse;
-import br.inter.dti.gmoraes.remittance.application.dto.CriarUsuarioCommand;
+import br.inter.dti.gmoraes.remittance.adapter.in.web.dto.CriarUsuarioRequest;
+import br.inter.dti.gmoraes.remittance.adapter.in.web.dto.UsuarioResponse;
+import br.inter.dti.gmoraes.remittance.application.dto.CriarUsuarioDTO;
 import br.inter.dti.gmoraes.remittance.application.port.in.CriarUsuarioUseCase;
 import br.inter.dti.gmoraes.remittance.domain.model.Usuario;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,10 +25,10 @@ public class UsuarioController {
 
     @PostMapping
     public ResponseEntity<UsuarioResponse> criar(
-            @RequestBody CriarUsuarioRequest request) {
+            @Valid @RequestBody CriarUsuarioRequest request) {
 
-        CriarUsuarioCommand command =
-                new CriarUsuarioCommand(
+        CriarUsuarioDTO dto =
+                new CriarUsuarioDTO(
                         request.nomeCompleto(),
                         request.email(),
                         request.senha(),
@@ -36,7 +37,7 @@ public class UsuarioController {
                         request.tipoUsuario()
                 );
 
-        Usuario usuario = criarUsuarioUseCase.criar(command);
+        Usuario usuario = criarUsuarioUseCase.criar(dto);
 
         UsuarioResponse response =
                 new UsuarioResponse(
