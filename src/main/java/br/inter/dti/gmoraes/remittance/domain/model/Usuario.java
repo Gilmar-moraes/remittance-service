@@ -1,7 +1,10 @@
 package br.inter.dti.gmoraes.remittance.domain.model;
 
+import br.inter.dti.gmoraes.remittance.application.dto.CriarUsuarioCommand;
 import br.inter.dti.gmoraes.remittance.domain.enums.TipoUsuario;
 import jakarta.persistence.*;
+
+import java.math.BigDecimal;
 
 @Entity
 @Table(
@@ -120,5 +123,17 @@ public class Usuario {
 
     public void setCarteira(Carteira carteira) {
         this.carteira = carteira;
+    }
+
+    public static Usuario criar(CriarUsuarioCommand command) {
+        return new Usuario(
+                command.nomeCompleto(),
+                command.email(),
+                command.senha(),
+                command.tipoUsuario(),
+                command.cpf(),
+                command.cnpj(),
+                new Carteira(BigDecimal.ZERO, BigDecimal.ZERO)
+        );
     }
 }
