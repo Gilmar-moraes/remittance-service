@@ -3,7 +3,7 @@ spring:
     name: remittance-service
 
   datasource:
-    url: jdbc:h2:mem:remittance-db
+    url: jdbc:h2:mem:remittance
     driver-class-name: org.h2.Driver
     username: sa
     password:
@@ -14,9 +14,15 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
 
     show-sql: true
 
-server:
-  port: 8080
+  cache:
+    type: simple
+
+  management:
+    endpoints:
+      web:
+        exposure:
+          include: health,info,metrics

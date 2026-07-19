@@ -3,6 +3,7 @@ package br.inter.dti.gmoraes.remittance.domain.model;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -25,36 +26,45 @@ public class Remessa {
     @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal valorDolar;
 
-    @ManyToOne(optional = false)
-    private Cotacao cotacao;
+    @Column(nullable = false, precision = 19, scale = 6)
+    private BigDecimal cotacaoCompra;
+
+    @Column(nullable = false)
+    private LocalDate dataCotacao;
 
     @Column(nullable = false)
     private LocalDateTime dataHora;
 
     public Remessa() {}
 
-    public Remessa(Long id,
-                   Usuario remetente,
-                   Usuario destinatario,
-                   BigDecimal valorReal,
+    public Remessa(LocalDateTime dataHora,
+                   LocalDate dataCotacao,
+                   BigDecimal cotacaoCompra,
                    BigDecimal valorDolar,
-                   Cotacao cotacao,
-                   LocalDateTime dataHora) {
-        this.id = id;
-        this.remetente = remetente;
-        this.destinatario = destinatario;
-        this.valorReal = valorReal;
-        this.valorDolar = valorDolar;
-        this.cotacao = cotacao;
+                   BigDecimal valorReal,
+                   Usuario destinatario,
+                   Usuario remetente,
+                   Long id) {
         this.dataHora = dataHora;
+        this.dataCotacao = dataCotacao;
+        this.cotacaoCompra = cotacaoCompra;
+        this.valorDolar = valorDolar;
+        this.valorReal = valorReal;
+        this.destinatario = destinatario;
+        this.remetente = remetente;
+        this.id = id;
+    }
+
+    public LocalDate getDataCotacao() {
+        return dataCotacao;
     }
 
     public LocalDateTime getDataHora() {
         return dataHora;
     }
 
-    public Cotacao getCotacao() {
-        return cotacao;
+    public BigDecimal getCotacaoCompra() {
+        return cotacaoCompra;
     }
 
     public BigDecimal getValorDolar() {
@@ -82,7 +92,8 @@ public class Remessa {
             Usuario destinatario,
             BigDecimal valorReal,
             BigDecimal valorDolar,
-            Cotacao cotacao) {
+            BigDecimal cotacaoCompra,
+            LocalDate dataCotacao) {
 
         Remessa remessa = new Remessa();
 
@@ -90,7 +101,8 @@ public class Remessa {
         remessa.destinatario = destinatario;
         remessa.valorReal = valorReal;
         remessa.valorDolar = valorDolar;
-        remessa.cotacao = cotacao;
+        remessa.cotacaoCompra = cotacaoCompra;
+        remessa.dataCotacao = dataCotacao;
         remessa.dataHora = LocalDateTime.now();
 
         return remessa;

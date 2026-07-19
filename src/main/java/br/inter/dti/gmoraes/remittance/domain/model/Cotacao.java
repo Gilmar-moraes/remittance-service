@@ -5,18 +5,12 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "cotacoes")
 public class Cotacao {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, precision = 19, scale = 6)
     private BigDecimal cotacaoCompra;
 
-    @Column(nullable = false)
     private LocalDateTime dataHoraCotacao;
 
     public Cotacao() {}

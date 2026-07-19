@@ -5,6 +5,7 @@ import br.inter.dti.gmoraes.remittance.application.port.in.RealizarRemessaUseCas
 import br.inter.dti.gmoraes.remittance.application.port.out.CotacaoClientPort;
 import br.inter.dti.gmoraes.remittance.application.port.out.RemessaRepositoryPort;
 import br.inter.dti.gmoraes.remittance.application.port.out.UsuarioRepositoryPort;
+import br.inter.dti.gmoraes.remittance.domain.enums.TipoUsuario;
 import br.inter.dti.gmoraes.remittance.domain.exception.RegraNegocioException;
 import br.inter.dti.gmoraes.remittance.domain.exception.UsuarioNaoEncontradoException;
 import br.inter.dti.gmoraes.remittance.domain.model.Cotacao;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Service
 @Transactional
@@ -35,6 +37,7 @@ public class RealizarRemessaService implements RealizarRemessaUseCase {
 
     @Override
     public Remessa realizar(RealizarRemessaDTO remessaDTO) {
+
         Usuario remetente = buscarUsuario(remessaDTO.remetenteId());
 
         Usuario destinatario = buscarUsuario(remessaDTO.destinatarioId());
@@ -44,11 +47,10 @@ public class RealizarRemessaService implements RealizarRemessaUseCase {
                 destinatario,
                 remessaDTO.valorReal());
 
-        Cotacao cotacao = cotacaoClientPort.buscarCotacao(LocalDate.now());
+        Cotacao cotacao =
+                cotacaoClientPort.buscarCotacao(LocalDate.now());
 
-        BigDecimal valorDolar = converter(
-                remessaDTO.valorReal(),
-                cotacao.getCotacaoCompra());
+        BigDecimal valorDolar = converter(remessaDTO.valorReal(),cotacao.getCotacaoCompra());
 
         movimentarCarteiras(
                 remetente,
@@ -56,12 +58,15 @@ public class RealizarRemessaService implements RealizarRemessaUseCase {
                 remessaDTO.valorReal(),
                 valorDolar);
 
-        Remessa remessa = Remessa.registrar(
-                remetente,
-                destinatario,
-                remessaDTO.valorReal(),
-                valorDolar,
-                cotacao);
+        Remessa remessa =
+                Remessa.registrar(
+                        remetente,
+                        destinatario,
+                        remessaDTO.valorReal(),
+                        valorDolar,
+                        cotacao.getCotacaoCompra(),
+                        cotacao.getDataHoraCotacao().toLocalDate()
+                );
 
         return remessaRepository.salvar(remessa);
     }
@@ -88,6 +93,11 @@ public class RealizarRemessaService implements RealizarRemessaUseCase {
                     "Saldo insuficiente."
             );
         }
+
+        validarLimiteDiario(
+                remetente,
+                valor
+        );
     }
 
     private void movimentarCarteiras(
@@ -112,6 +122,32 @@ public class RealizarRemessaService implements RealizarRemessaUseCase {
                 2,
                 RoundingMode.HALF_EVEN
         );
+
+    }
+
+    private void validarLimiteDiario(
+            Usuario remetente,
+            BigDecimal valorRemessa) {
+
+        LocalDate hoje = LocalDate.now();
+
+        BigDecimal totalHoje =
+                remessaRepository.somarValorRemessasNoPeriodo(
+                        remetente.getId(),
+                        hoje.atStartOfDay(),
+                        hoje.atTime(LocalTime.MAX)
+                );
+
+        BigDecimal limite =
+                remetente.getTipoUsuario() == TipoUsuario.PF
+                        ? new BigDecimal("10000")
+                        : new BigDecimal("50000");
+
+        if (totalHoje.add(valorRemessa).compareTo(limite) > 0) {
+            throw new RegraNegocioException(
+                    "Limite diário de transações excedido."
+            );
+        }
 
     }
 }

@@ -5,6 +5,9 @@ import br.inter.dti.gmoraes.remittance.adapter.in.web.dto.UsuarioResponse;
 import br.inter.dti.gmoraes.remittance.application.dto.CriarUsuarioDTO;
 import br.inter.dti.gmoraes.remittance.application.port.in.CriarUsuarioUseCase;
 import br.inter.dti.gmoraes.remittance.domain.model.Usuario;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +26,15 @@ public class UsuarioController {
         this.criarUsuarioUseCase = criarUsuarioUseCase;
     }
 
+    @Operation(
+            summary = "Cadastrar usuário",
+            description = "Realiza o cadastro de usuários PF ou PJ."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Usuário criado"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos"),
+            @ApiResponse(responseCode = "409", description = "Usuário já existente")
+    })
     @PostMapping
     public ResponseEntity<UsuarioResponse> criar(
             @Valid @RequestBody CriarUsuarioRequest request) {
