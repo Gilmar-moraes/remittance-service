@@ -1,6 +1,6 @@
 # Remittance Service
 
-Sistema de remessas internacionais desenvolvido como desafio técnico.
+Sistema de remessas desenvolvido como desafio técnico.
 
 O projeto permite o cadastro de usuários Pessoa Física (PF) e Pessoa Jurídica (PJ), gerenciamento de carteiras em Real (BRL) e Dólar (USD) e realização de remessas internacionais utilizando a cotação oficial do Banco Central do Brasil.
 
@@ -45,8 +45,6 @@ Foi escolhida para manter o domínio desacoplado da infraestrutura.
 Toda regra de negócio permanece concentrada na camada de aplicação e domínio.
 
 As integrações com banco de dados e API externa são realizadas através de Ports & Adapters.
-
----
 
 ---
 
