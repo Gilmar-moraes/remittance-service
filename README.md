@@ -71,10 +71,13 @@ A arquitetura permite substituir facilmente por PostgreSQL, MySQL ou Oracle.
 ### Flyway
 
 Responsável pelo versionamento do banco de dados, garantindo que a estrutura do banco seja reproduzida de forma consistente em qualquer ambiente.
+
 ---
+
 ### Springdoc OpenAPI (Swagger)
 
 Documentação automática da API REST.
+
 
 ## Funcionalidades implementadas
 
@@ -158,6 +161,79 @@ mvn test
 ```
 
 ---
+
+## 📖 API Endpoints
+
+### 1. Usuários
+**`POST /usuarios`** - Cadastra um novo usuário.
+
+**Exemplo de Requisição:**
+```json
+{
+  "nomeCompleto": "Gilmar Moraes",
+  "email": "gilmar@email.com",
+  "senha": "123456",
+  "tipoUsuario": "PF",
+  "cpf": "12345678900"
+}
+```
+
+**Exemplo de Resposta (201 Created):**
+```json
+{
+  "id": 1,
+  "nomeCompleto": "Gilmar Moraes",
+  "email": "gilmar@email.com"
+}
+```
+
+### 2. Remessas
+**`POST /remessas`** - Realiza a conversão de Real para Dólar e transfere entre carteiras.
+
+**Exemplo de Requisição:**
+```json
+{
+  "remetenteId": 1,
+  "destinatarioId": 2,
+  "valorReal": 100.00
+}
+```
+
+**Exemplo de Resposta (200 OK):**
+```json
+{
+  "id": 1,
+  "valorReal": 100.00,
+  "valorDolar": 19.54,
+  "cotacaoCompra": 5.117,
+  "dataCotacao": "2026-07-19",
+  "dataHora": "2026-07-19T15:10:24"
+}
+```
+
+---
+
+## Tratamento de Erros
+
+A API retorna respostas padronizadas para exceções de negócio:
+
+| Cenário | Status | Mensagem de Erro |
+| :--- | :--- | :--- |
+| Saldo Insuficiente | 400 Bad Request | "Saldo insuficiente." |
+| Limite Diário Excedido | 400 Bad Request | "Limite diário de transações excedido." |
+| Usuário Não Encontrado | 404 Not Found | "Usuário não encontrado." |
+
+**Exemplo de Resposta de Erro:**
+```json
+{
+  "timestamp": "2026-07-19T15:00:00",
+  "status": 400,
+  "erro": "Saldo insuficiente."
+}
+```
+
+---
+
 
 # Melhorias Futuras
 
