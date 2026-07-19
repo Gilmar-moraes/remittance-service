@@ -6,5 +6,5 @@ import java.time.LocalDate;
 
 public interface CotacaoClientPort {
 
-    public Cotacao buscarCotacao(LocalDate data);
+    Cotacao buscarCotacao(LocalDate data);
 }

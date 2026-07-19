@@ -5,5 +5,5 @@ import br.inter.dti.gmoraes.remittance.domain.model.Remessa;
 
 public interface RealizarRemessaUseCase {
 
-    public Remessa realizar(RealizarRemessaDTO remessaDTOCommand);
+    Remessa realizar(RealizarRemessaDTO remessaDTOCommand);
 }

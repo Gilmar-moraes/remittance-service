@@ -6,13 +6,13 @@ import java.util.Optional;
 
 public interface UsuarioRepositoryPort {
 
-    public Usuario salvar(Usuario usuario);
+    Usuario salvar(Usuario usuario);
 
-    public Optional<Usuario> buscarPorId(Long id);
+    Optional<Usuario> buscarPorId(Long id);
 
-    public Optional<Usuario> buscarPorEmail(String email);
+    Optional<Usuario> buscarPorEmail(String email);
 
-    public Optional<Usuario> buscarPorCpf(String cpf);
+    Optional<Usuario> buscarPorCpf(String cpf);
 
-    public Optional<Usuario> buscarPorCnpj(String cnpj);
+    Optional<Usuario> buscarPorCnpj(String cnpj);
 }

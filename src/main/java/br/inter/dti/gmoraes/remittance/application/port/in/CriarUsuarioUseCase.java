@@ -5,5 +5,5 @@ import br.inter.dti.gmoraes.remittance.domain.model.Usuario;
 
 public interface CriarUsuarioUseCase {
 
-    public Usuario criar(CriarUsuarioDTO usuarioCommand);
+    Usuario criar(CriarUsuarioDTO usuarioCommand);
 }

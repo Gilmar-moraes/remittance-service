@@ -8,9 +8,9 @@ import java.time.LocalDateTime;
 
 public interface RemessaRepositoryPort {
 
-    public Remessa salvar(Remessa remessa);
+    Remessa salvar(Remessa remessa);
 
-    public BigDecimal somarValorRemessasNoPeriodo(
+    BigDecimal somarValorRemessasNoPeriodo(
             Long usuarioId,
             LocalDateTime inicio,
             LocalDateTime fim

@@ -68,6 +68,14 @@ A arquitetura permite substituir facilmente por PostgreSQL, MySQL ou Oracle.
 
 ---
 
+### Flyway
+
+Responsável pelo versionamento do banco de dados, garantindo que a estrutura do banco seja reproduzida de forma consistente em qualquer ambiente.
+---
+### Springdoc OpenAPI (Swagger)
+
+Documentação automática da API REST.
+
 ## Funcionalidades implementadas
 
 - Cadastro de usuários PF e PJ
@@ -153,17 +161,17 @@ mvn test
 
 # Melhorias Futuras
 
-- Docker e Docker Compose
-- PostgreSQL como banco principal
-- Autenticação JWT
+- Docker e Docker Compose para facilitar a execução da aplicação.
+- Persistência e histórico de movimentações da carteira (extrato).
+- Autenticação e autorização com Spring Security + JWT.
 - Criptografia de senhas com BCrypt
-- Histórico de movimentações das carteiras
+- Ampliação da cobertura de testes unitários e de integração.
 - Auditoria das operações
+- Cache distribuído para a cotação utilizando Redis.
 - Retry e Circuit Breaker para integração com o Banco Central
-- Observabilidade 
 
 ---
 
 # Autor
 
-Gilmar da Costa Moraes Júnior
+Gilmar Moraes

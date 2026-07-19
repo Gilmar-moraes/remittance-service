@@ -2,8 +2,6 @@ package br.inter.dti.gmoraes.remittance.adapter.in.web.handler;
 
 import br.inter.dti.gmoraes.remittance.adapter.in.web.dto.ErroResponse;
 import br.inter.dti.gmoraes.remittance.domain.exception.RegraNegocioException;
-import br.inter.dti.gmoraes.remittance.domain.exception.UsuarioJaExisteException;
-import br.inter.dti.gmoraes.remittance.domain.exception.UsuarioNaoEncontradoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
