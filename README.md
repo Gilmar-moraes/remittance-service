@@ -330,36 +330,6 @@ Exemplo
 
 ---
 
-# Estrutura do Projeto
-
-```
-application
-│
-├── dto
-├── service
-├── validator
-├── port
-│   ├── in
-│   └── out
-│
-domain
-│
-├── model
-├── enums
-└── exception
-│
-adapter
-│
-├── in
-│   └── web
-│
-└── out
-    ├── persistence
-    └── bcb
-```
-
----
-
 # Melhorias Futuras
 
 - Persistência do histórico de movimentações da carteira (extrato).
