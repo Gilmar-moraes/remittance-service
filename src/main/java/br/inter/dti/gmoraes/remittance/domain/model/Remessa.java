@@ -53,55 +53,46 @@ public class Remessa {
         return dataHora;
     }
 
-    public void setDataHora(LocalDateTime dataHora) {
-        this.dataHora = dataHora;
-    }
-
     public Cotacao getCotacao() {
         return cotacao;
-    }
-
-    public void setCotacao(Cotacao cotacao) {
-        this.cotacao = cotacao;
     }
 
     public BigDecimal getValorDolar() {
         return valorDolar;
     }
 
-    public void setValorDolar(BigDecimal valorDolar) {
-        this.valorDolar = valorDolar;
-    }
-
     public BigDecimal getValorReal() {
         return valorReal;
-    }
-
-    public void setValorReal(BigDecimal valorReal) {
-        this.valorReal = valorReal;
     }
 
     public Usuario getDestinatario() {
         return destinatario;
     }
 
-    public void setDestinatario(Usuario destinatario) {
-        this.destinatario = destinatario;
-    }
-
     public Usuario getRemetente() {
         return remetente;
-    }
-
-    public void setRemetente(Usuario remetente) {
-        this.remetente = remetente;
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public static Remessa registrar(
+            Usuario remetente,
+            Usuario destinatario,
+            BigDecimal valorReal,
+            BigDecimal valorDolar,
+            Cotacao cotacao) {
+
+        Remessa remessa = new Remessa();
+
+        remessa.remetente = remetente;
+        remessa.destinatario = destinatario;
+        remessa.valorReal = valorReal;
+        remessa.valorDolar = valorDolar;
+        remessa.cotacao = cotacao;
+        remessa.dataHora = LocalDateTime.now();
+
+        return remessa;
     }
 }

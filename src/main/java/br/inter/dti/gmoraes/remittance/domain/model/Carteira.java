@@ -14,7 +14,10 @@ public class Carteira {
     @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal saldoDolar;
 
-    public Carteira() {}
+    public Carteira() {
+        this.saldoReal = BigDecimal.ZERO;;
+        this.saldoDolar = BigDecimal.ZERO;;
+    }
 
     public Carteira(BigDecimal saldoReal, BigDecimal saldoDolar) {
         this.saldoReal = saldoReal;
@@ -25,15 +28,27 @@ public class Carteira {
         return saldoReal;
     }
 
-    public void setSaldoReal(BigDecimal saldoReal) {
-        this.saldoReal = saldoReal;
-    }
-
     public BigDecimal getSaldoDolar() {
         return saldoDolar;
     }
 
-    public void setSaldoDolar(BigDecimal saldoDolar) {
-        this.saldoDolar = saldoDolar;
+    public boolean possuiSaldoEmReal(BigDecimal valor) {
+        return saldoReal.compareTo(valor) >= 0;
+    }
+
+    public void debitarReal(BigDecimal valor) {
+        this.saldoReal = this.saldoReal.subtract(valor);
+    }
+
+    public void creditarReal(BigDecimal valor) {
+        this.saldoReal = this.saldoReal.add(valor);
+    }
+
+    public void debitarDolar(BigDecimal valor) {
+        this.saldoDolar = this.saldoDolar.subtract(valor);
+    }
+
+    public void creditarDolar(BigDecimal valor) {
+        this.saldoDolar = this.saldoDolar.add(valor);
     }
 }

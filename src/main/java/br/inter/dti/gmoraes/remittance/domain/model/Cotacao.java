@@ -3,7 +3,7 @@ package br.inter.dti.gmoraes.remittance.domain.model;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "cotacoes")
@@ -14,39 +14,26 @@ public class Cotacao {
     private Long id;
 
     @Column(nullable = false, precision = 19, scale = 6)
-    private BigDecimal valorCompra;
+    private BigDecimal cotacaoCompra;
 
     @Column(nullable = false)
-    private LocalDate dataCotacao;
+    private LocalDateTime dataHoraCotacao;
 
     public Cotacao() {}
 
-    public Cotacao(BigDecimal valorCompra, LocalDate dataCotacao) {
-        this.valorCompra = valorCompra;
-        this.dataCotacao = dataCotacao;
+    public Cotacao(BigDecimal cotacaoCompra, LocalDateTime dataHoraCotacao) {
+        this.cotacaoCompra = cotacaoCompra;
+        this.dataHoraCotacao = dataHoraCotacao;
     }
 
     public Long getId() {
         return id;
     }
-
-    public void setId(Long id) {
-        this.id = id;
+    public LocalDateTime getDataHoraCotacao() {
+        return dataHoraCotacao;
     }
 
-    public LocalDate getDataCotacao() {
-        return dataCotacao;
-    }
-
-    public void setDataCotacao(LocalDate dataCotacao) {
-        this.dataCotacao = dataCotacao;
-    }
-
-    public BigDecimal getValorCompra() {
-        return valorCompra;
-    }
-
-    public void setValorCompra(BigDecimal valorCompra) {
-        this.valorCompra = valorCompra;
+    public BigDecimal getCotacaoCompra() {
+        return cotacaoCompra;
     }
 }

@@ -1,11 +1,10 @@
 package br.inter.dti.gmoraes.remittance.application.port.out;
 
-import br.inter.dti.gmoraes.remittance.domain.model.Usuario;
+import br.inter.dti.gmoraes.remittance.domain.model.Cotacao;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public interface CotacaoClientPort {
 
-    public BigDecimal consultarCotacao(LocalDate data);
+    public Cotacao buscarCotacao(LocalDate data);
 }
