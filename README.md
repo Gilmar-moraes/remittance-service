@@ -1,18 +1,18 @@
 # Remittance Service
 
-Sistema de remessas desenvolvido como desafio técnico.
+Sistema de remessas internacionais desenvolvido como desafio técnico.
 
-O projeto permite o cadastro de usuários Pessoa Física (PF) e Pessoa Jurídica (PJ), gerenciamento de carteiras em Real (BRL) e Dólar (USD) e realização de remessas internacionais utilizando a cotação oficial do Banco Central do Brasil.
+A aplicação permite o cadastro de usuários Pessoa Física (PF) e Pessoa Jurídica (PJ), carteiras em Real (BRL) e Dólar (USD), depósitos em carteira e realização de remessas internacionais utilizando a cotação oficial do Banco Central do Brasil.
 
 ---
 
-## Arquitetura
+# Arquitetura
 
 O projeto foi desenvolvido utilizando **Arquitetura Hexagonal (Ports & Adapters)**.
 
 Essa arquitetura foi escolhida por separar claramente as regras de negócio das tecnologias utilizadas, facilitando manutenção, testes e futuras evoluções da aplicação.
 
-As regras de negócio permanecem isoladas da infraestrutura, permitindo substituir banco de dados, APIs externas ou frameworks sem impactar o domínio da aplicação.
+As regras de negócio permanecem isoladas da infraestrutura, permitindo substituir banco de dados, APIs externas ou frameworks sem impacto no domínio da aplicação.
 
 ---
 
@@ -20,19 +20,21 @@ As regras de negócio permanecem isoladas da infraestrutura, permitindo substitu
 
 | Tecnologia | Motivo da escolha |
 |------------|-------------------|
-| Java 21 | Versão LTS com recursos modernos da linguagem. |
-| Spring Boot 4.1 | Desenvolvimento rápido de APIs REST seguindo boas práticas. |
+| Java 21 | Versão LTS da linguagem. |
+| Spring Boot 4 | Desenvolvimento rápido de APIs REST. |
 | Spring Web | Exposição dos endpoints REST. |
-| Spring Data JPA | Persistência desacoplada utilizando repositórios. |
-| H2 Database | Banco em memória para facilitar testes e execução do desafio. |
+| Spring Data JPA | Persistência desacoplada através de repositórios. |
+| H2 Database | Banco em memória para facilitar execução do desafio. |
+| Flyway | Versionamento do banco de dados. |
 | Spring Validation | Validação declarativa das requisições. |
-| WebClient | Cliente HTTP moderno, não bloqueante e preparado para futuras integrações. |
-| Spring Cache | Evita chamadas desnecessárias à API do Banco Central. |
-| Spring Boot Actuator | Monitoramento e métricas da aplicação. |
-| Springdoc OpenAPI (Swagger) | Documentação automática da API REST. |
+| WebClient | Integração com a API do Banco Central. |
+| Spring Cache | Cache da cotação do dólar. |
+| Spring Boot Actuator | Monitoramento da aplicação. |
+| Springdoc OpenAPI (Swagger) | Documentação automática da API. |
+| Docker | Execução simplificada da aplicação. |
 | JUnit 5 | Testes unitários. |
-| Mockito | Mock de dependências durante os testes. |
-| Maven | Gerenciamento de dependências e build da aplicação. |
+| Mockito | Mock das dependências. |
+| Maven | Build e gerenciamento de dependências. |
 
 ---
 
@@ -40,70 +42,84 @@ As regras de negócio permanecem isoladas da infraestrutura, permitindo substitu
 
 ## Arquitetura Hexagonal
 
-Foi escolhida para manter o domínio desacoplado da infraestrutura.
+A Arquitetura Hexagonal foi escolhida por manter o domínio totalmente desacoplado da infraestrutura.
 
-Toda regra de negócio permanece concentrada na camada de aplicação e domínio.
+Toda regra de negócio permanece concentrada nas camadas **Domain** e **Application**, enquanto banco de dados, API do Banco Central e controllers são apenas adaptadores.
 
-As integrações com banco de dados e API externa são realizadas através de Ports & Adapters.
+Essa abordagem facilita testes, manutenção e futuras substituições de tecnologias.
+
+---
+
+## Java 21
+
+Foi utilizada a versão LTS mais recente da linguagem, oferecendo melhorias de desempenho, legibilidade e suporte de longo prazo.
 
 ---
 
 ## WebClient
 
-Mesmo sendo uma aplicação síncrona, foi escolhido o WebClient por ser a tecnologia recomendada pelo Spring para novas aplicações e permitir futura evolução para processamento reativo.
-
----
-
-## Cache
-
-A cotação do dólar é armazenada em cache para evitar múltiplas consultas consecutivas ao Banco Central.
+Mesmo sendo uma aplicação síncrona, foi escolhido o WebClient por ser a tecnologia recomendada pelo ecossistema Spring para integrações HTTP modernas e por permitir futura evolução para programação reativa.
 
 ---
 
 ## Banco H2
 
-Utilizado apenas para simplificar a execução do desafio.
+O banco H2 foi utilizado apenas para simplificar a execução do desafio.
 
-A arquitetura permite substituir facilmente por PostgreSQL, MySQL ou Oracle.
-
----
-
-### Flyway
-
-Responsável pelo versionamento do banco de dados, garantindo que a estrutura do banco seja reproduzida de forma consistente em qualquer ambiente.
+Como a aplicação utiliza Arquitetura Hexagonal e Spring Data JPA, a troca para PostgreSQL, MySQL ou Oracle pode ser realizada com poucas alterações.
 
 ---
 
-### Springdoc OpenAPI (Swagger)
+## Flyway
 
-Documentação automática da API REST.
+Responsável pelo versionamento do banco de dados.
 
+Todas as tabelas são criadas automaticamente através de migrations, garantindo consistência entre ambientes.
 
-## Funcionalidades implementadas
+---
 
-- Cadastro de usuários PF e PJ
+## Cache
+
+A cotação do dólar é armazenada em cache para reduzir chamadas consecutivas à API do Banco Central.
+
+---
+
+## Swagger
+
+Toda a API está documentada através do Springdoc OpenAPI.
+
+---
+
+# Funcionalidades Implementadas
+
+- Cadastro de usuários PF
+- Cadastro de usuários PJ
 - Carteira em Real
 - Carteira em Dólar
-- Depósito de saldo
+- Depósito em carteira
 - Remessas internacionais
-- Conversão automática Real → Dólar
+- Conversão automática BRL → USD
 - Consulta da cotação do Banco Central
-- Cache das cotações
+- Cache da cotação
 - Limite diário por tipo de usuário
-- Validação de saldo
 - Validação de CPF/CNPJ
+- Validação de saldo
 - Tratamento global de exceções
-- Documentação Swagger
+- Flyway
+- Swagger/OpenAPI
+- Docker
 - Arquitetura Hexagonal
 
 ---
 
 # Como executar
 
+## Opção 1 - Maven
+
 Clone o projeto
 
 ```bash
-git clone
+git clone 
 ```
 
 Entre na pasta
@@ -115,6 +131,12 @@ cd remittance-service
 Execute
 
 ```bash
+mvn clean install
+```
+
+Depois
+
+```bash
 mvn spring-boot:run
 ```
 
@@ -123,6 +145,36 @@ A aplicação ficará disponível em
 ```
 http://localhost:8080
 ```
+
+---
+
+## Opção 2 - Docker
+
+Gerar a imagem
+
+```bash
+docker build -t remittance-service .
+```
+
+Executar o container
+
+```bash
+docker run -p 8080:8080 remittance-service
+```
+
+Ou utilizando Docker Compose
+
+```bash
+docker-compose up --build
+```
+
+---
+
+# Banco de Dados
+
+As migrations do banco são executadas automaticamente pelo Flyway durante a inicialização da aplicação.
+
+Não é necessário criar tabelas manualmente.
 
 ---
 
@@ -142,7 +194,7 @@ http://localhost:8080/swagger-ui.html
 http://localhost:8080/actuator
 ```
 
-Exemplos:
+Endpoints disponíveis
 
 ```
 /actuator/health
@@ -162,12 +214,18 @@ mvn test
 
 ---
 
-## 📖 API Endpoints
+# API
 
-### 1. Usuários
-**`POST /usuarios`** - Cadastra um novo usuário.
+## Criar Usuário
 
-**Exemplo de Requisição:**
+### POST
+
+```
+/usuarios
+```
+
+### Requisição
+
 ```json
 {
   "nomeCompleto": "Gilmar Moraes",
@@ -178,7 +236,8 @@ mvn test
 }
 ```
 
-**Exemplo de Resposta (201 Created):**
+### Resposta
+
 ```json
 {
   "id": 1,
@@ -187,10 +246,45 @@ mvn test
 }
 ```
 
-### 2. Remessas
-**`POST /remessas`** - Realiza a conversão de Real para Dólar e transfere entre carteiras.
+---
 
-**Exemplo de Requisição:**
+## Depositar Saldo
+
+### POST
+
+```
+/usuarios/{id}/depositos
+```
+
+### Requisição
+
+```json
+{
+  "moeda": "BRL",
+  "valor": 1000.00
+}
+```
+
+### Resposta
+
+```json
+{
+  "mensagem": "Depósito realizado com sucesso."
+}
+```
+
+---
+
+## Realizar Remessa
+
+### POST
+
+```
+/remessas
+```
+
+### Requisição
+
 ```json
 {
   "remetenteId": 1,
@@ -199,7 +293,8 @@ mvn test
 }
 ```
 
-**Exemplo de Resposta (200 OK):**
+### Resposta
+
 ```json
 {
   "id": 1,
@@ -213,17 +308,18 @@ mvn test
 
 ---
 
-## Tratamento de Erros
+# Tratamento de Erros
 
-A API retorna respostas padronizadas para exceções de negócio:
+| Cenário | Status |
+|----------|--------|
+| Usuário não encontrado | 404 |
+| Saldo insuficiente | 400 |
+| Limite diário excedido | 400 |
+| CPF/CNPJ inválido | 400 |
+| Dados inválidos | 400 |
 
-| Cenário | Status | Mensagem de Erro |
-| :--- | :--- | :--- |
-| Saldo Insuficiente | 400 Bad Request | "Saldo insuficiente." |
-| Limite Diário Excedido | 400 Bad Request | "Limite diário de transações excedido." |
-| Usuário Não Encontrado | 404 Not Found | "Usuário não encontrado." |
+Exemplo
 
-**Exemplo de Resposta de Erro:**
 ```json
 {
   "timestamp": "2026-07-19T15:00:00",
@@ -234,20 +330,20 @@ A API retorna respostas padronizadas para exceções de negócio:
 
 ---
 
-
 # Melhorias Futuras
 
-- Docker e Docker Compose para facilitar a execução da aplicação.
-- Persistência e histórico de movimentações da carteira (extrato).
-- Autenticação e autorização com Spring Security + JWT.
-- Criptografia de senhas com BCrypt
-- Ampliação da cobertura de testes unitários e de integração.
-- Auditoria das operações
-- Cache distribuído para a cotação utilizando Redis.
-- Retry e Circuit Breaker para integração com o Banco Central
+- Persistência do histórico de movimentações da carteira (extrato).
+- Transferências entre carteiras na mesma moeda.
+- Cache distribuído utilizando Redis.
+- Retry e Circuit Breaker para integração com o Banco Central.
+- Autenticação e autorização utilizando Spring Security + JWT.
+- Criptografia de senhas com BCrypt.
+- Ampliação da cobertura de testes unitários e testes de integração.
+- Observabilidade com logs estruturados e métricas customizadas.
+- Containerização com Kubernetes para ambientes de produção.
 
 ---
 
 # Autor
 
-Gilmar Moraes
+**Gilmar Moraes**
